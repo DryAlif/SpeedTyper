@@ -8,7 +8,7 @@ const settings = document.getElementById('settings');
 const settingsForm = document.getElementById('settings-form');
 const difficultySelect = document.getElementById('difficulty');
 
-/ List of words for game
+// List of words for game
 const words = [
   'sigh',
   'tense',
@@ -46,3 +46,39 @@ function getRandomWord() {
   return words[Math.floor(Math.random() * words.length)];
 }
 
+// Add word to DOM
+function addWordToDOM() {
+  randomWord = getRandomWord();
+  word.innerHTML = randomWord;
+}
+
+function updateScore() {
+  score++;
+  scoreEl.innerHTML = score;
+}
+
+addWordToDOM();
+
+// event listeners
+// Typing
+text.addEventListener('input', e => {
+  const insertedText = e.target.value;
+
+  if (insertedText === randomWord) {
+    addWordToDOM();
+   updateScore();
+
+    // Clear
+    e.target.value = '';
+
+    if (difficulty === 'hard') {
+      time += 2;
+    } else if (difficulty === 'medium') {
+      time += 3;
+    } else {
+      time += 5;
+    }
+
+    updateTime();
+  }
+});
